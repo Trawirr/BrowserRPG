@@ -23,3 +23,6 @@ class Memory(models.Model):
     # expedition attributes
     passage = models.IntegerField(default=0)
     stealth = models.IntegerField(default=0)
+
+class Echo:
+    pass
