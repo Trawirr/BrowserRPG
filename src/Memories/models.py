@@ -13,8 +13,13 @@ class Memory(models.Model):
     attack = models.IntegerField(default=0)
     defense = models.IntegerField(default=0)
     dodge = models.IntegerField(default=0)
+    speed = models.IntegerField(default=0)
     initiative = models.IntegerField(default=0)
 
     # rest attributes
     heal = models.IntegerField(default=0)
     heal_percent = models.FloatField(default=0.0)
+
+    # expedition attributes
+    passage = models.IntegerField(default=0)
+    stealth = models.IntegerField(default=0)
