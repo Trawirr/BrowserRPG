@@ -5,13 +5,14 @@ from django.contrib.auth.models import User
 class Character(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
-    # DORMANT = "DO"
-    # AWAKENED = "AW"
-    # ASCENDED = "AS"
-    # TRANSCENDENT = "TR"
-    # SUPREME = "SU"
-    # SACRED = "SA"
-    # DIVINE = "DI"
+    class Ranks(models.IntegerChoices):
+        DORMANT = 1, 'Dormant'
+        AWAKENED = 2, 'Awakened'
+        ASCENDED = 3, 'Ascended'
+        TRANSCENDENT = 4, 'Transcendent'
+        SUPREME = 5, 'Supreme'
+        SACRED = 6, 'Sacred'
+        DIVINE = 7, 'Divine'
     # RANK_CHOICES = {
     #     (DORMANT, "Dormant"),
     #     (AWAKENED, "Awakened"),
@@ -22,7 +23,8 @@ class Character(models.Model):
     #     (DIVINE, "Divine"),
     # }
     # rank = models.CharField(max_length=2, choices=RANK_CHOICES, default=DORMANT)
-    rank = models.IntegerChoices("Rank", "DORMANT AWAKENED ASCENDED TRANSCENDENT SUPREME SACED DIVINE")
+#    rank_choices = models.IntegerChoices("Rank", "DORMANT AWAKENED ASCENDED TRANSCENDENT SUPREME SACED DIVINE")
+    rank = models.IntegerField(choices=Ranks.choices)
     shards = models.IntegerField(default=0)
     
 class Aspect(models.Model):

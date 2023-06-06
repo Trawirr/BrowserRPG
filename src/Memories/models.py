@@ -1,9 +1,12 @@
 from django.db import models
+from RanksClasses.models import *
 
 # Create your models here.
 class Memory(models.Model):
-    rank = models.IntegerChoices("Rank", "DORMANT AWAKENED ASCENDED TRANSCENDENT SUPREME SACED DIVINE")
-    tier = models.IntegerChoices("Tier", "I II III IV V VI VII")
+    # rank = models.IntegerChoices("Rank", "DORMANT AWAKENED ASCENDED TRANSCENDENT SUPREME SACED DIVINE")
+    # tier = models.IntegerChoices("Tier", "I II III IV V VI VII")
+    rank = models.ForeignKey(Rank)
+    tier = models.ForeignKey(Tier)
     type = models.TextChoices("Type", "WEAPON RANGED_WEAPON ARMOR UTILITY")
     description = models.TextField(default="A memory...")
     is_usable = models.BooleanField(default=False)
