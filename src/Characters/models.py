@@ -27,18 +27,17 @@ class AbilitySuperclass(models.Model):
 
     # rest attributes
     heal = models.IntegerField(default=0)
-    heal_percent = models.FloatField(default=0.0)
 
     # expedition attributes
     passage = models.IntegerField(default=0)
     stealth = models.IntegerField(default=0)
     
 class Aspect(AbilitySuperclass):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE, related_name="aspects")
-    rank = models.ForeignKey(Rank, on_delete=models.SET_NULL, null=True)
-
     # AKA luck
     prophecy = models.IntegerField(default=0)
+
+    character = models.ForeignKey(Character, on_delete=models.CASCADE, related_name="aspects")
+    rank = models.ForeignKey(Rank, on_delete=models.SET_NULL, null=True)
 
 class Ability(AbilitySuperclass):
     character = models.ForeignKey(Character, on_delete=models.CASCADE, related_name="abilities")
