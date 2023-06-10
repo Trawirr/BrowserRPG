@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    </head>
+    <div class="sidenav">
+        <a href="#about">Profil</a>
+        <button class="dropdown-btn">[Your location]
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="#">Hunt</a>
+          <a href="#">Expedition</a>
+          <a href="#">Challenge</a>
+        </div>
+      </div> 
+
+      {% block scripts %}
+      <script src="{% static 'js/main.js' %}"></script> 
+      {% endblock %}
+</html>
