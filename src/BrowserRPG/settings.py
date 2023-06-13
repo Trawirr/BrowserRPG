@@ -38,11 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'characters'
     'Characters.apps.CharactersConfig',
     'RanksClasses.apps.RanksclassesConfig',
-    # 'memories.apps.MemoriesConfig'
-    # 'enemies.apps.EnemiesConfig',
+    'Memories.apps.MemoriesConfig',
+    'Enemies.apps.EnemiesConfig',
+    'Regions.apps.RegionsConfig',
 ]
 
 MIDDLEWARE = [
