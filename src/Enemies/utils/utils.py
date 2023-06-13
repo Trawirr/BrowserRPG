@@ -12,9 +12,7 @@ def create_random_sentence(n):
 
 def get_model_fields():
     fields = Enemy._meta.get_fields()
-    for i, f in enumerate(fields):
-        print(i, f.name)
-    fields = fields[4:]
+    fields = fields[5:]
 
     return [f.name for f in fields]
 
@@ -35,11 +33,13 @@ def create_enemy_attributes_dict(rank, tier):
         d[fields[i]] = attrs[i]
     return d
 
-def create_enemy():
+def create_enemy(region: Region) -> Enemy:
+    '''Creates a random enemy from a given region'''
     rank, tier = random.choices(RANKS_TIERS, k=2, weights=PROBS.flatten())
     fields_dict = create_enemy_attributes_dict(rank, tier)
     fields_dict['rank'] = CreatureRank.objects.get(value=rank)
     fields_dict['tier'] = CreatureClass.objects.get(value=tier)
+    fields_dict['region'] = region
     fields_dict['name'] = create_random_sentence(1)
 
     return Enemy(**fields_dict)

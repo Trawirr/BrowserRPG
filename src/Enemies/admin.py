@@ -1,5 +1,8 @@
 from django.contrib import admin
 from Enemies.models import *
 
-# Register your models here.
-admin.site.register(Enemy)
+@admin.register(Enemy)
+class EnemyAdmin(admin.ModelAdmin):
+    list_display = ("name", "region", "rank", "tier", "attack", "defense", "agility", "speed")
+
+    ordering = ("region", "tier", "rank")
