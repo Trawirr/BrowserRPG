@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Shards: {{ user.characters.shards }}</h1>
+<form action="training" method="POST">
+    {% csrf_token %}
+    <label for="shards">Number of shards:</label>
+    <input type="number" id="shards" name="shards" value="0" min="0" max="{{ user.characters.shards }}">
+    <input type="submit" value="Train">
+</form>
+{% endblock %}

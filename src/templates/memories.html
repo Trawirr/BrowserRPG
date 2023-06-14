@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for memory in user.characters.memories.all %}
+    <div class="memory">
+        <h2>{{ memory.name }}</h2>
+        <h3><i>{{ memory.memory_type }}, {{ memory.rank.name }}, {{ memory.tier.name }}</i></h3>
+        <table>
+            <tr>
+                <th>Attack</th>
+                <th>Defense</th>
+                <th>Agility</th>
+                <th>Speed</th>
+                <th>Heal</th>
+                <th>Passage</th>
+                <th>Stealth</th>
+            </tr>
+            <tr>
+                <td>{{ memory.attack }}</td>
+                <td>{{ memory.defense }}</td>
+                <td>{{ memory.agility }}</td>
+                <td>{{ memory.speed }}</td>
+                <td>{{ memory.heal }}</td>
+                <td>{{ memory.passage }}</td>
+                <td>{{ memory.stealth }}</td>
+            </tr>
+        </table>
+        <p><i>{{ memory.description }}</i></p>
+    </div>
+{% endfor %}
+{% endblock %}

@@ -4,18 +4,48 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        
+
+
     </head>
     <div class="sidenav">
-        <a href="#about">Profil</a>
-        <button class="dropdown-btn">[Your location]
+        {% if user.characters %}
+        <ul>
+            <li>{{ user.characters.rank.name }} {{ user.username }}</li>
+            <li>Soul Core: {{ user.characters.soul_core }}</li>
+            <li>Soul Shards: {{ user.characters.shards }}</li>
+        </ul>
+        <button class="dropdown-btn">Soul Sea
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-container">
-          <a href="#">Hunt</a>
-          <a href="#">Expedition</a>
-          <a href="#">Challenge</a>
+            <a href="profile"><i class="fas fa-user"></i>Summary</a>
+            <a href="memories"><i class="far fa-sun"></i>Memories</a>
+            <a href="training"><i class="fas fa-hands"></i>Training</a>
         </div>
+        <button class="dropdown-btn">{{ user.characters.region.name }}
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="#"><i class="fas fa-spider"></i>Hunt</a>
+          <a href="#"><i class="fas fa-hiking"></i>Expedition</a>
+          <a href="#"><i class="fas fa-campground"></i>Rest</a>
+          <a href="#"><i class="fas fa-skull"></i>Challenge</a>
+        </div>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <a href="logout">Logout</a>
+        {% else %}
+        <a href="login">Log in</a>
+        {% endif %}
       </div> 
+
+      <div class="main">
+        {% block content %}
+        {% endblock %}
+      </div>
 
       {% block scripts %}
       <script src="{% static 'js/main.js' %}"></script> 

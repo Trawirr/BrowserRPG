@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="category">
+    <h1>Summary</h1>
+</div>
+<div class="memory">
+    <h2>{{ user.characters.rank.name }} {{ user.username }}</h2>
+    <table>
+        <tr>
+            <th>Attack</th>
+            <th>Defense</th>
+            <th>Agility</th>
+            <th>Speed</th>
+            <th>Heal</th>
+            <th>Passage</th>
+            <th>Stealth</th>
+            <th>Prophecy</th>
+        </tr>
+        <tr>
+            <td>{{ user.characters.attributes.attack }}</td>
+            <td>{{ user.characters.attributes.defense }}</td>
+            <td>{{ user.characters.attributes.agility }}</td>
+            <td>{{ user.characters.attributes.speed }}</td>
+            <td>{{ user.characters.attributes.heal }}</td>
+            <td>{{ user.characters.attributes.passage }}</td>
+            <td>{{ user.characters.attributes.stealth }}</td>
+            <td>{{ user.characters.attributes.prophecy }}</td>
+        </tr>
+    </table>
+    <p><i>{{ aspect.description }}</i></p>
+</div>
+
+<div class="category">
+    <h1>Aspect</h1>
+</div>
+
+{% for aspect in user.characters.aspects.all %}
+<div class="memory">
+    <h2>{{ aspect.name }}</h2>
+    <table>
+        <tr>
+            <th>Attack</th>
+            <th>Defense</th>
+            <th>Agility</th>
+            <th>Speed</th>
+            <th>Heal</th>
+            <th>Passage</th>
+            <th>Stealth</th>
+            <th>Prophecy</th>
+        </tr>
+        <tr>
+            <td>{{ aspect.attack }}</td>
+            <td>{{ aspect.defense }}</td>
+            <td>{{ aspect.agility }}</td>
+            <td>{{ aspect.speed }}</td>
+            <td>{{ aspect.heal }}</td>
+            <td>{{ aspect.passage }}</td>
+            <td>{{ aspect.stealth }}</td>
+            <td>{{ aspect.prophecy }}</td>
+        </tr>
+    </table>
+    <p><i>{{ aspect.description }}</i></p>
+</div>
+{% endfor %}
+
+
+<div class="category">
+    <h1>Abilities</h1>
+</div>
+
+{% for aspect in user.characters.abilities.all %}
+<div class="memory">
+    <h2>{{ aspect.name }}</h2>
+    <table>
+        <tr>
+            <th>Attack</th>
+            <th>Defense</th>
+            <th>Agility</th>
+            <th>Speed</th>
+            <th>Heal</th>
+            <th>Passage</th>
+            <th>Stealth</th>
+            <th>Prophecy</th>
+        </tr>
+        <tr>
+            <td>{{ aspect.attack }}</td>
+            <td>{{ aspect.defense }}</td>
+            <td>{{ aspect.agility }}</td>
+            <td>{{ aspect.speed }}</td>
+            <td>{{ aspect.heal }}</td>
+            <td>{{ aspect.passage }}</td>
+            <td>{{ aspect.stealth }}</td>
+            <td>{{ aspect.prophecy }}</td>
+        </tr>
+    </table>
+    <p><i>{{ aspect.description }}</i></p>
+</div>
+{% endfor %}
+
+<div class="category">
+    <h1>Flaws</h1>
+</div>
+
+{% for aspect in user.characters.flaws.all %}
+<div class="memory">
+    <h2>{{ aspect.name }}</h2>
+    <table>
+        <tr>
+            <th>Attack</th>
+            <th>Defense</th>
+            <th>Agility</th>
+            <th>Speed</th>
+            <th>Heal</th>
+            <th>Passage</th>
+            <th>Stealth</th>
+            <th>Prophecy</th>
+        </tr>
+        <tr>
+            <td>{{ aspect.attack }}</td>
+            <td>{{ aspect.defense }}</td>
+            <td>{{ aspect.agility }}</td>
+            <td>{{ aspect.speed }}</td>
+            <td>{{ aspect.heal }}</td>
+            <td>{{ aspect.passage }}</td>
+            <td>{{ aspect.stealth }}</td>
+            <td>{{ aspect.prophecy }}</td>
+        </tr>
+    </table>
+    <p><i>{{ aspect.description }}</i></p>
+</div>
+{% endfor %}
+{% endblock %}
