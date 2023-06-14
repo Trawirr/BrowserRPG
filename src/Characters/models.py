@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from RanksClasses.models import *
-# Create your models here.
+from Regions.models import *
 
 class Character(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="characters")
     rank = models.ForeignKey(Rank, on_delete=models.SET_NULL, null=True)
     soul_core = models.IntegerField(default=0)
     shards = models.IntegerField(default=0)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, related_name="characters")
 
     def __str__(self) -> str:
         return f"{self.user.username} {self.rank.name} {self.soul_core} {self.shards}"
@@ -43,7 +44,7 @@ class AbilitySuperclass(models.Model):
     class Meta:
         abstract = True
 
-    description = models.TextField(default="Description...")
+    name = models.TextField(default="Name...")
 
     # battle attributes
     attack = models.IntegerField(default=0)
