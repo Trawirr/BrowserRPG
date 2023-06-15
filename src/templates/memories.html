@@ -3,6 +3,15 @@
 {% block content %}
 {% for memory in user.characters.memories.all %}
     <div class="memory">
+
+        {% if not memory.is_equipped %}
+        <form action="memories" method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="memory_id" name="memory_id" value="{{ memory.id }}">
+            <input type="submit" value="Equip">
+        </form>
+        {% endif %}
+
         <h2>{{ memory.name }}</h2>
         <h3><i>{{ memory.memory_type }}, {{ memory.rank.name }}, {{ memory.tier.name }}</i></h3>
         <table>
