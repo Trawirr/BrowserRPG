@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from RanksClasses.models import *
 from Regions.models import *
+import random
 
 class Character(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="characters")
@@ -12,6 +13,24 @@ class Character(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user.username} {self.rank.name} {self.soul_core} {self.shards}"
+    
+    @property
+    def name(self):
+        return self.user.username
+    
+    @property
+    def equipped_memories(self):
+        return self.memories.filter(is_equipped=True)
+    
+    @property
+    def all_attributes(self):
+        attrs = self.attributes
+        attrs_mem = self.memories_attributes
+
+        for k, v in attrs_mem.items():
+            attrs[k] += v
+
+        return attrs
     
     @property
     def attributes(self):
@@ -37,6 +56,34 @@ class Character(models.Model):
             attrs_dict[k] = v
 
         return attrs_dict
+    
+    @property
+    def memories_attributes(self):
+        attrs = [0 for i in range(7)]
+        for memory in self.equipped_memories:
+            memory_attrs = memory.attributes
+            attrs = [attrs[i] + memory_attrs[i] for i in range(len(memory_attrs))]
+
+        fields = Aspect._meta.get_fields()
+        attrs_names = [f.name for f in fields[2:9]]
+
+        attrs_dict = {}
+        for k, v in zip(attrs_names, attrs):
+            attrs_dict[k] = v
+
+        return attrs_dict
+    
+    def get_attack(self):
+        return max(1, self.attributes.attack + random.randint(0, self.memories_attributes.attack))
+    
+    def get_defense(self):
+        return self.attributes.defense + random.randint(0, self.memories_attributes.defense)
+    
+    def get_agility(self):
+        return self.attributes.agility + random.randint(0, self.memories_attributes.agility)
+    
+    def get_speed(self):
+        return max(1, self.attributes.speed + random.randint(0, self.memories_attributes.speed))
 
 
 # Abstract superclass for Aspect, Ability and Flaw models

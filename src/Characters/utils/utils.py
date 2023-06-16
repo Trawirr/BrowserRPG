@@ -1,4 +1,5 @@
 from Characters.models import *
+from Memories.models import *
 import string
 import random
 
@@ -83,5 +84,48 @@ def create_flaw(rank, character):
 
     return Flaw(**fields_dict)
 
+def equip(character: Character, memory: Memory):
+    for mem in character.memories.filter(memory_type=memory.memory_type):
+        mem.is_equipped = False
+        mem.save()
+
+    memory.is_equipped = True
+    memory.save()
+
+def check_first(char):
+    if isinstance(char, Character):
+        if char.equipped_memories.filter(memory_subtype="RANGED"):
+            return 1000 + char.all_attributes.speed
+    else:
+        return char.all_attributes.speed
+
+def get_first_hit(char):
+    attrs = char.all_attributes
+    if isinstance(char, Character):
+        return round(attrs.attack * (1+attrs.stealth/10))
+    return attrs.attack
+
+def damage(x):
+    return max(0, round(x))
+
 def battle(char1, char2):
-    pass
+    character1 = char1.all_attributes
+    character2 = char2.all_attributes
+
+    character1['initiative'] = 0
+    character2['initiative'] = 0
+
+    character1['hp'] = char1.hp if isinstance(char1, Character) else 100
+    character2['hp'] = char2.hp if isinstance(char2, Character) else 100
+
+    battle_logs = []
+
+    if check_first(char1) >= check_first(char2):
+        damage_dealt = damage(get_first_hit(char1) - char2.get_defense())
+        character2['hp'] -= damage_dealt
+        battle_logs.append(f"{char1.name} deals {damage_dealt} to {char2.name}.")
+
+    else:
+        damage_dealt = damage(get_first_hit(char2) - char1.get_defense())
+        character1['hp'] -= damage_dealt
+        battle_logs.append(f"{char2.name} deals {damage_dealt} to {char1.name}.")

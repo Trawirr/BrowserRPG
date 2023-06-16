@@ -21,6 +21,11 @@ def profile(request):
 
 def memories(request):
     if request.user.is_authenticated:
+        if request.method == "POST":
+            memory_id = int(request.POST['memory_id'])
+            memory = Memory.objects.get(id=memory_id)
+            character = request.user.characters
+            equip(character, memory)
         context = {}
         return render(request, 'memories.html', context)
     else: return redirect('login')
