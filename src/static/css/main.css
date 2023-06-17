@@ -1,3 +1,7 @@
+body {
+  background-color: #babaaa;
+}
+
 i.fas,
 i.far,
 i.fal {
@@ -22,7 +26,7 @@ i.fal {
 .sidenav a, .dropdown-btn {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 24px;
   color: #818181;
   display: block;
   border: none;
@@ -35,16 +39,20 @@ i.fal {
 
 .sidenav ul{
     list-style: none;
-    padding: 0px 8px 12px 16px;
+    padding: 0px 8px 16px 16px;
     text-decoration: none;
     font-size: 20px;
     color: #818181;
     display: block;
     border: none;
     background: none;
-    width:100%;
+    width: 100%;
     text-align: left;
     border-bottom: #818181 2px dashed;
+}
+
+.sidenav li {
+  margin-top: 6px;
 }
 
 /* On mouse-over */
@@ -57,11 +65,12 @@ i.fal {
   margin-left: 200px; /* Same as the width of the sidenav */
   font-size: 20px; /* Increased text to enable scrolling */
   padding: 0px 10px;
+  margin-bottom: 40px;
 }
 
 /* Add an active class to the active dropdown button */
 .active {
-  background-color: green;
+  background-color: #303030;
   color: white;
 }
 
@@ -76,4 +85,60 @@ i.fal {
 .fa-caret-down {
   float: right;
   padding-right: 8px;
+}
+
+.logout-btn-container {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.logout-btn {
+  padding: 6px 8px;
+  font-size: 16px;
+  background-color: #111;
+  color: #818181;
+  border: none;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  color: #f1f1f1;
+}
+
+.memory {
+  background-color: #303030;
+  color: #f1f1f1;
+  text-align: center;
+  width: 50%;
+  margin: auto;
+  margin-bottom: 8px;
+  padding: 4px;
+
+}
+
+.memory table {
+  margin: 0 auto;
+}
+
+.memory table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+  text-align: center;
+  padding: 8px;
+}
+
+.memory th {
+  width: 75px;
+}
+
+.memory p {
+  width: 40%;
+  margin: 0 auto;
+  padding: 8px 0px;
+}
+
+.category {
+  text-align: center;
 }
