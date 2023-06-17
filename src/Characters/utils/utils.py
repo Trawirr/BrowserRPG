@@ -123,9 +123,17 @@ def battle(char1, char2):
     if check_first(char1) >= check_first(char2):
         damage_dealt = damage(get_first_hit(char1) - char2.get_defense())
         character2['hp'] -= damage_dealt
-        battle_logs.append(f"{char1.name} deals {damage_dealt} to {char2.name}.")
+        battle_logs.append(f"{char1.name} deals {damage_dealt} (CRITICAL HIT) to {char2.name}.")
 
     else:
         damage_dealt = damage(get_first_hit(char2) - char1.get_defense())
         character1['hp'] -= damage_dealt
-        battle_logs.append(f"{char2.name} deals {damage_dealt} to {char1.name}.")
+        battle_logs.append(f"{char2.name} deals {damage_dealt} (CRITICAL HIT) to {char1.name}.")
+
+    while character1['hp'] > 0 and character2['hp'] > 0:
+        character1['initiative'] += char1.get_speed()
+        character2['initiative'] += char2.get_speed()
+
+        if character1['initiative'] >= 10 and character2['initiative'] >= 10:
+            if character1['initiative'] > character2['initiative']:
+
