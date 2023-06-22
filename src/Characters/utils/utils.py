@@ -108,9 +108,19 @@ def get_first_hit(char):
 def damage(x):
     return max(0, round(x))
 
+def hit(character1, character2):
+    if character1.roll_agility() >= character2.roll_agility():
+        dmg = character1.roll_attack() - character2.roll_defense()
+        return dmg, f"{character1.name} deals {damage} damage to {character2.name}."
+    else:
+        return 0, f"{character2.name} dodges."
+
 def battle(char1, char2):
     character1 = char1.all_attributes
     character2 = char2.all_attributes
+
+    character1['name'] = char1.name
+    character2['name'] = char2.name
 
     character1['initiative'] = 0
     character2['initiative'] = 0
@@ -120,6 +130,7 @@ def battle(char1, char2):
 
     battle_logs = []
 
+    # first strike
     if check_first(char1) >= check_first(char2):
         damage_dealt = damage(get_first_hit(char1) - char2.get_defense())
         character2['hp'] -= damage_dealt
@@ -130,10 +141,32 @@ def battle(char1, char2):
         character1['hp'] -= damage_dealt
         battle_logs.append(f"{char2.name} deals {damage_dealt} (CRITICAL HIT) to {char1.name}.")
 
+    # main loop
     while character1['hp'] > 0 and character2['hp'] > 0:
         character1['initiative'] += char1.get_speed()
         character2['initiative'] += char2.get_speed()
 
         if character1['initiative'] >= 10 and character2['initiative'] >= 10:
             if character1['initiative'] > character2['initiative']:
+                dmg, log = hit(char1, char2)
+                char2['hp'] -= damage(dmg)
+                battle_logs.append(log)
+
+            else:
+                dmg, log = hit(char2, char1)
+                char1['hp'] -= damage(dmg)
+                battle_logs.append(log)
+
+        if character1['initiative'] >= 10:
+            dmg, log = hit(char1, char2)
+            char2['hp'] -= damage(dmg)
+            battle_logs.append(log)
+
+        if character2['initiative'] >= 10:
+            dmg, log = hit(char2, char1)
+            char1['hp'] -= damage(dmg)
+            battle_logs.append(log)
+
+    for log in battle_logs:
+        print(log)
 
