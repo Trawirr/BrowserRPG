@@ -10,6 +10,7 @@ class Character(models.Model):
     soul_core = models.IntegerField(default=0)
     shards = models.IntegerField(default=0)
     region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, related_name="characters")
+    hp = models.IntegerField(default=100)
 
     def __str__(self) -> str:
         return f"{self.user.username} {self.rank.name} {self.soul_core} {self.shards}"
