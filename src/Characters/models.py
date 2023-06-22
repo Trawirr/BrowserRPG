@@ -73,18 +73,20 @@ class Character(models.Model):
 
         return attrs_dict
     
-    def get_attack(self):
+    def roll_attack(self):
         return max(1, self.attributes.attack + random.randint(0, self.memories_attributes.attack))
     
-    def get_defense(self):
+    def roll_defense(self):
         return self.attributes.defense + random.randint(0, self.memories_attributes.defense)
     
-    def get_agility(self):
+    def roll_agility(self):
         return self.attributes.agility + random.randint(0, self.memories_attributes.agility)
     
-    def get_speed(self):
+    def roll_speed(self):
         return max(1, self.attributes.speed + random.randint(0, self.memories_attributes.speed))
 
+    def roll_stealth(self):
+        return max(1, self.attributes.stealth + random.randint(0, self.memories_attributes.stealth))
 
 # Abstract superclass for Aspect, Ability and Flaw models
 class AbilitySuperclass(models.Model):
