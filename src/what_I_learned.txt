@@ -1,0 +1,16 @@
+verbose_name - name displayed in admin view
+related_name
+related_query_name
+
+ManyToManyField is symmetrical, if a.manytomany = [b], then b.manytomany = [a]
+
+for abstract classes:
+    class Meta:
+            abstract = True
+
+custom admin page views
+    custom columns
+    ordering
+    verbose_names
+
+

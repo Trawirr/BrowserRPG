@@ -1,3 +1,12 @@
+i.fas,
+i.far,
+i.fal {
+  margin-right: 10px; /* Adjust the margin values as needed */
+  width: 24px; /* Adjust the width as needed */
+  display: inline-block;
+  text-align: center;
+}
+
 .sidenav {
   height: 100%;
   width: 200px;
@@ -7,7 +16,6 @@
   left: 0;
   background-color: #111;
   overflow-x: hidden;
-  padding-top: 20px;
 }
 
 /* Style the sidenav links and the dropdown button */
@@ -25,6 +33,20 @@
   outline: none;
 }
 
+.sidenav ul{
+    list-style: none;
+    padding: 0px 8px 12px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    border: none;
+    background: none;
+    width:100%;
+    text-align: left;
+    border-bottom: #818181 2px dashed;
+}
+
 /* On mouse-over */
 .sidenav a:hover, .dropdown-btn:hover {
   color: #f1f1f1;
@@ -39,7 +61,7 @@
 
 /* Add an active class to the active dropdown button */
 .active {
-  background-color: green;
+  background-color: #303030;
   color: white;
 }
 
