@@ -4,6 +4,6 @@ TODO
 src/db.sqlite3
 src/chatgpttest.py
 
-*.log
-*.pot
-*.pyc
+**/*.log
+**/*.pot
+**/*.pyc
