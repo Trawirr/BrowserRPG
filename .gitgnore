@@ -2,3 +2,8 @@ Pipfile
 Pipfile.lock
 TODO
 src/db.sqlite3
+src/chatgpttest.py
+
+*.log
+*.pot
+*.pyc
