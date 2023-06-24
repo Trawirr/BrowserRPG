@@ -95,78 +95,87 @@ def equip(character: Character, memory: Memory):
 def check_first(char):
     if isinstance(char, Character):
         if char.equipped_memories.filter(memory_subtype="RANGED"):
-            return 1000 + char.all_attributes.speed
+            print(char.all_attributes)
+            return 1000 + char.all_attributes["speed"]
+        return char.all_attributes["speed"]
     else:
-        return char.all_attributes.speed
+        print(char.all_attributes)
+        return char.all_attributes["speed"]
 
 def get_first_hit(char):
     attrs = char.all_attributes
     if isinstance(char, Character):
-        return round(attrs.attack * (1+attrs.stealth/10))
+        return round(attrs["attack"] * (1+attrs["stealth"]/10))
     return attrs.attack
 
 def damage(x):
     return max(0, round(x))
 
 def hit(character1, character2):
-    if character1.roll_agility() >= character2.roll_agility():
-        dmg = character1.roll_attack() - character2.roll_defense()
-        return dmg, f"{character1.name} deals {damage} damage to {character2.name}."
+    agility1 = character1.roll_agility()
+    agility2 = character2.roll_agility()
+    print(f"{character1.name} agility: {agility1}, {character2.name} agility: {agility2}")
+    if agility1 >= agility2:
+        attack, defense = character1.roll_attack(), character2.roll_defense()
+        print(f"{character1.name} attack: {attack}, {character2.name} defense: {defense}")
+        dmg = damage(character1.roll_attack() - character2.roll_defense())
+        return dmg, f"{character1.name} deals {dmg} damage to {character2.name}."
     else:
         return 0, f"{character2.name} dodges."
 
 def battle(char1, char2):
-    character1 = char1.all_attributes
-    character2 = char2.all_attributes
+    character1 = char1.battle_dict
+    character2 = char2.battle_dict
 
-    character1['name'] = char1.name
-    character2['name'] = char2.name
-
-    character1['initiative'] = 0
-    character2['initiative'] = 0
-
-    character1['hp'] = char1.hp if isinstance(char1, Character) else 100
-    character2['hp'] = char2.hp if isinstance(char2, Character) else 100
+    print(character1,"\n", character2, "\n\n")
 
     battle_logs = []
 
     # first strike
     if check_first(char1) >= check_first(char2):
-        damage_dealt = damage(get_first_hit(char1) - char2.get_defense())
+        damage_dealt = damage(get_first_hit(char1) - char2.roll_defense())
         character2['hp'] -= damage_dealt
-        battle_logs.append(f"{char1.name} deals {damage_dealt} (CRITICAL HIT) to {char2.name}.")
+        battle_logs.append(f"{char1.name} deals {damage_dealt} (CRITICAL HIT) damage to {char2.name}.")
 
     else:
-        damage_dealt = damage(get_first_hit(char2) - char1.get_defense())
+        damage_dealt = damage(get_first_hit(char2) - char1.roll_defense())
         character1['hp'] -= damage_dealt
-        battle_logs.append(f"{char2.name} deals {damage_dealt} (CRITICAL HIT) to {char1.name}.")
+        battle_logs.append(f"{char2.name} deals {damage_dealt} (CRITICAL HIT) damage to {char1.name}.")
 
     # main loop
     while character1['hp'] > 0 and character2['hp'] > 0:
-        character1['initiative'] += char1.get_speed()
-        character2['initiative'] += char2.get_speed()
+        character1['initiative'] += char1.roll_speed()
+        character2['initiative'] += char2.roll_speed()
+
+        print("\n---- new turn ----")
+        print(f"{char1.name} ini: {character1['initiative']}, {char2.name} ini: {character2['initiative']}")
 
         if character1['initiative'] >= 10 and character2['initiative'] >= 10:
             if character1['initiative'] > character2['initiative']:
                 dmg, log = hit(char1, char2)
-                char2['hp'] -= damage(dmg)
+                character2['hp'] -= dmg
+                character1['initiative'] = 0
                 battle_logs.append(log)
 
             else:
                 dmg, log = hit(char2, char1)
-                char1['hp'] -= damage(dmg)
+                character1['hp'] -= dmg
+                character2['initiative'] = 0
                 battle_logs.append(log)
 
         if character1['initiative'] >= 10:
             dmg, log = hit(char1, char2)
-            char2['hp'] -= damage(dmg)
+            character2['hp'] -= dmg
+            character1['initiative'] = 0
             battle_logs.append(log)
 
         if character2['initiative'] >= 10:
             dmg, log = hit(char2, char1)
-            char1['hp'] -= damage(dmg)
+            character1['hp'] -= dmg
+            character2['initiative'] = 0
             battle_logs.append(log)
+    
+    battle_logs.append(f"{character1['name']} {character1['hp']}hp vs {character2['name']} {character2['hp']}hp")
 
-    for log in battle_logs:
-        print(log)
+    return battle_logs
 

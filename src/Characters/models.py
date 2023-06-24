@@ -74,20 +74,29 @@ class Character(models.Model):
 
         return attrs_dict
     
+    @property
+    def battle_dict(self):
+        char_dict = self.all_attributes
+        char_dict['name'] = self.name
+        char_dict['initiative'] = 0
+        char_dict['hp'] = self.hp
+
+        return char_dict
+    
     def roll_attack(self):
-        return max(1, self.attributes.attack + random.randint(0, self.memories_attributes.attack))
+        return max(1, self.attributes["attack"] + random.randint(0, self.memories_attributes["attack"]))
     
     def roll_defense(self):
-        return self.attributes.defense + random.randint(0, self.memories_attributes.defense)
+        return self.attributes["defense"] + random.randint(0, self.memories_attributes["defense"])
     
     def roll_agility(self):
-        return self.attributes.agility + random.randint(0, self.memories_attributes.agility)
+        return self.attributes["agility"] + random.randint(0, self.memories_attributes["agility"])
     
     def roll_speed(self):
-        return max(1, self.attributes.speed + random.randint(0, self.memories_attributes.speed))
+        return max(1, self.attributes["speed"] + random.randint(0, self.memories_attributes["speed"]))
 
     def roll_stealth(self):
-        return max(1, self.attributes.stealth + random.randint(0, self.memories_attributes.stealth))
+        return max(1, self.attributes["stealth"] + random.randint(0, self.memories_attributes["stealth"]))
 
 # Abstract superclass for Aspect, Ability and Flaw models
 class AbilitySuperclass(models.Model):

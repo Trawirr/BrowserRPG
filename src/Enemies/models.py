@@ -23,14 +23,23 @@ class Enemy(models.Model):
     def all_attributes(self):
         return {'attack': self.attack, 'defense': self.defense, 'agility': self.agility, 'speed': self.speed}
     
+    @property
+    def battle_dict(self):
+        char_dict = self.all_attributes
+        char_dict['name'] = self.name
+        char_dict['initiative'] = 0
+        char_dict['hp'] = 100
+
+        return char_dict
+    
     def roll_attack(self):
-        return max(1, random.randint(0, self.attributes.attack))
+        return max(1, random.randint(0, self.attack))
     
     def roll_defense(self):
-        return self.attributes.defense
+        return self.defense
     
     def roll_agility(self):
-        return self.attributes.agility
+        return self.agility
     
     def roll_speed(self):
-        return max(1, random.randint(0, self.attributes.speed))
+        return max(1, random.randint(0, self.speed))
