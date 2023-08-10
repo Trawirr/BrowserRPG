@@ -5,6 +5,7 @@ from django.contrib import messages
 from Characters.models import *
 from RanksClasses.models import *
 from Characters.utils.utils import *
+from Enemies.utils.utils import *
 import numpy as np
 
 def hello(request):
@@ -43,6 +44,15 @@ def training(request):
                 messages.error(request, 'Incorrect number of shards')
         context = {}
         return render(request, 'training.html', context)
+    else: return redirect('login')
+
+def hunt(request):
+    if request.user.is_authenticated:
+        character = request.user.characters
+        enemy = get_random_enemy(character.region)
+        logs = battle(character, enemy)
+        context = {"enemy": enemy, "logs": logs}
+        return render(request, 'hunt.html', context)
     else: return redirect('login')
 
 def logout_view(request):

@@ -4,13 +4,18 @@ from RanksClasses.models import *
 from Regions.models import *
 import random
 
+class CreatureSuperClass(models.Model):
+    class Meta:
+        abstract = True
+        
+    rank = models.ForeignKey(Rank, on_delete=models.SET_NULL, null=True)
+    hp = models.IntegerField(default=100)
+
 class Character(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="characters")
-    rank = models.ForeignKey(Rank, on_delete=models.SET_NULL, null=True)
     soul_core = models.IntegerField(default=0)
     shards = models.IntegerField(default=0)
     region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, related_name="characters")
-    hp = models.IntegerField(default=100)
 
     def __str__(self) -> str:
         return f"{self.user.username} {self.rank.name} {self.soul_core} {self.shards}"
@@ -97,6 +102,14 @@ class Character(models.Model):
 
     def roll_stealth(self):
         return max(1, self.attributes["stealth"] + random.randint(0, self.memories_attributes["stealth"]))
+    
+    def set_hp(self, value):
+        if value <= 0:
+            print(f"DELETING: {self}")
+            self.delete()
+        else:
+            self.hp = value
+            self.save()
 
 # Abstract superclass for Aspect, Ability and Flaw models
 class AbilitySuperclass(models.Model):

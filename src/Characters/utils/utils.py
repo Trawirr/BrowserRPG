@@ -106,7 +106,7 @@ def get_first_hit(char):
     attrs = char.all_attributes
     if isinstance(char, Character):
         return round(attrs["attack"] * (1+attrs["stealth"]/10))
-    return attrs.attack
+    return attrs['attack']
 
 def damage(x):
     return max(0, round(x))
@@ -114,12 +114,13 @@ def damage(x):
 def hit(character1, character2):
     agility1 = character1.roll_agility()
     agility2 = character2.roll_agility()
-    print(f"{character1.name} agility: {agility1}, {character2.name} agility: {agility2}")
     if agility1 >= agility2:
         attack, defense = character1.roll_attack(), character2.roll_defense()
-        print(f"{character1.name} attack: {attack}, {character2.name} defense: {defense}")
         dmg = damage(character1.roll_attack() - character2.roll_defense())
-        return dmg, f"{character1.name} deals {dmg} damage to {character2.name}."
+        if dmg == 0:
+            return dmg, f"{character1.name} blocked attack"
+        else:
+            return dmg, f"{character1.name} deals {dmg} damage to {character2.name}."
     else:
         return 0, f"{character2.name} dodges."
 
@@ -147,9 +148,6 @@ def battle(char1, char2):
         character1['initiative'] += char1.roll_speed()
         character2['initiative'] += char2.roll_speed()
 
-        print("\n---- new turn ----")
-        print(f"{char1.name} ini: {character1['initiative']}, {char2.name} ini: {character2['initiative']}")
-
         if character1['initiative'] >= 10 and character2['initiative'] >= 10:
             if character1['initiative'] > character2['initiative']:
                 dmg, log = hit(char1, char2)
@@ -176,6 +174,12 @@ def battle(char1, char2):
             battle_logs.append(log)
     
     battle_logs.append(f"{character1['name']} {character1['hp']}hp vs {character2['name']} {character2['hp']}hp")
+    if isinstance(char1, Character):
+        char1.set_hp(character1['hp'])
+        char1.save()
+    if isinstance(char2, Character):
+        char2.set_hp(character2['hp'])
+        char2.save()
 
     return battle_logs
 

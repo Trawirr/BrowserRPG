@@ -13,6 +13,7 @@
         {% if user.characters %}
         <ul>
             <li>{{ user.characters.rank.name }} {{ user.username }}</li>
+            <li>Health points: {{ user.characters.hp }}</li>
             <li>Soul Core: {{ user.characters.soul_core }}</li>
             <li>Soul Shards: {{ user.characters.shards }}</li>
         </ul>
@@ -28,7 +29,7 @@
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-container">
-          <a href="#"><i class="fas fa-spider"></i>Hunt</a>
+          <a href="hunt"><i class="fas fa-spider"></i>Hunt</a>
           <a href="#"><i class="fas fa-hiking"></i>Expedition</a>
           <a href="#"><i class="fas fa-campground"></i>Rest</a>
           <a href="#"><i class="fas fa-skull"></i>Challenge</a>

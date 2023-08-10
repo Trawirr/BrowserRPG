@@ -28,7 +28,7 @@ class Enemy(models.Model):
         char_dict = self.all_attributes
         char_dict['name'] = self.name
         char_dict['initiative'] = 0
-        char_dict['hp'] = 100
+        char_dict['hp'] = 50
 
         return char_dict
     
